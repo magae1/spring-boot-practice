@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+		.target {
+			background-color: #be5faf;
+		}
+	</style>
+</head>
+<body>
+	<ul>
+		<li th:each="dto, state : ${list}" th:class="${dto.sno % 5 == 0} ? 'target' : ''">
+			<span th:if="${state.odd}">홀 -- [[${dto}]]</span>
+			<span th:unless="${state.odd}">짝 -- [[${dto}]]</span>
+		</li>
+	</ul>
+	<div th:with="num1 = ${10}, num2 = ${20}">
+		<h2 th:text="${num1 + num2}"></h2>
+	</div>
+	<ul>
+		<th:block th:each="dto, state : ${list}">
+			<li th:text="${dto.sno % 5 == 0} ? ${dto.sno} : ${dto.first}"></li>
+		</th:block>
+	</ul>
+	<ul>
+		<li th:each="dto : ${list}">
+			[[${dto.sno}]] --- [[${#temporals.format(dto.regTime, 'yyyy/MM/dd')}]]
+		</li>
+	</ul>
+</body>
+</html>
