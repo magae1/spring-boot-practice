@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Board</title>
+	<style>
+		.form {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+			width: 360px;
+		}
+
+		.form-input {
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+<form class="form" th:action="@{/board/modify}" method="post">
+	<input hidden name="bno" th:value="${board.bno}"/>
+	<label>
+		<span>제목</span>
+		<input class="form-input" id="board-title" name="title" th:value="${board.title}"/>
+	</label>
+	<label>
+		<span>내용</span>
+		<input class="form-input" id="board-content" name="content" th:value="${board.content}"/>
+	</label>
+	<label>
+		<span>작성자</span>
+		<input class="form-input" id="board-writer" name="writer" th:value="${board.writer}"/>
+	</label>
+	<input type="submit" value="수정하기"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Board</title>
+</head>
+<body>
+<h2>게시글 번호</h2>
+<p>[[${board.bno}]]</p>
+<h3>제목</h3>
+<p>[[${board.title}]]</p>
+<h3>내용</h3>
+<p>[[${board.content}]]</p>
+<h3>작성자</h3>
+<p>[[${board.writer}]]</p>
+<h3>등록일</h3>
+<p>
+	[[${#temporals.format(board.regDate, 'yyyy-MM-dd hh:mm:ss')}]]
+</p>
+<h4>조회수</h4>
+<p>[[${board.hit}]]</p>
+<a th:href="@{/board/modify(bno=${board.bno})}">수정하기</a>
+</body>
+</html>

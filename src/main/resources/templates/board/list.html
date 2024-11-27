@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<table>
+	<tr>
+		<th>게시글 번호</th>
+		<th>제목</th>
+		<th>내용</th>
+		<th>작성자</th>
+		<th>등록일</th>
+		<th>조회수</th>
+		<th>삭제</th>
+	</tr>
+	<tr th:each="item : ${bList}">
+		<td th:text="${item.bno}"></td>
+		<td>
+			<a th:text="${item.title}" th:href="@{/board/read(bno=${item.bno})}"></a>
+		</td>
+		<td th:text="${item.content}"></td>
+		<td th:text="${item.writer}"></td>
+		<td th:text="${#temporals.format(item.regDate, 'yyyy-MM-dd')}"></td>
+		<td th:text="${item.hit}"></td>
+		<td>
+			<form th:action="@{/board/remove(bno=${item.bno})}" method="post">
+				<button type="submit">삭제하기</button>
+			</form>
+		</td>
+	</tr>
+</table>
+<a th:href="@{/board/write}">새 게시글 작성하러 가기</a>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.conan.bootpractice.dao.BoardMapper">
+    <select id="getBoardList" resultType="org.conan.bootpractice.domain.Board">
+        SELECT * FROM BOARD WHERE BNO > 0
+    </select>
+    <insert id="insert">
+        INSERT INTO BOARD(TITLE, CONTENT, WRITER)
+        VALUES (#{title}, #{content}, #{writer})
+    </insert>
+    <insert id="insertSelectKey">
+        INSERT INTO BOARD(TITLE, CONTENT, WRITER)
+        VALUES (#{title}, #{content}, #{writer})
+        <selectKey resultType="int" keyProperty="bno" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
+    </insert>
+    <select id="read" resultType="org.conan.bootpractice.domain.Board">
+        SELECT *
+        FROM BOARD
+        WHERE BNO=#{bno}
+    </select>
+    <update id="increaseHit">
+        UPDATE BOARD SET
+        HIT = HIT + 1
+        WHERE BNO=#{bno}
+    </update>
+    <delete id="delete">
+        DELETE FROM BOARD
+        WHERE BNO = #{bno}
+    </delete>
+    <update id="update">
+        UPDATE BOARD SET
+        TITLE=#{title},
+        CONTENT=#{content},
+        WRITER=#{writer}
+        WHERE BNO=#{bno}
+    </update>
+</mapper>
