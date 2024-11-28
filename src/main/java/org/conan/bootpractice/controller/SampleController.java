@@ -70,7 +70,7 @@ public class SampleController {
         model.addAttribute("dto", sampleDto);
     }
 
-    @GetMapping({"/exLayout1", "/exLayout2", "/exTemplate"})
+    @GetMapping({"/exLayout1", "/exLayout2", "/exTemplate", "/exSidebar"})
     public void exLayout(Model model) {
         log.info("exLayout");
     }
