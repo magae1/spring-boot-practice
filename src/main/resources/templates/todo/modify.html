@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<th:block th:replace="~{layouts/basic :: setContent(~{this :: content} )}">
+	<th:block th:fragment="content">
+		<form th:action="@{/todo/modify}" method="post" class="mx-5">
+			<input name="tno" hidden th:value="${todo.tno}"/>
+			<div class="mb-3">
+				<label for="title-input" class="form-label">제목</label>
+				<input type="text" name="title" class="form-control" id="title-input" th:value="${todo.title}"/>
+			</div>
+			<div class="mb-3">
+				<label for="writer-input" class="form-label">작성자</label>
+				<input type="text" name="writer" class="form-control" id="writer-input" th:value="${todo.writer}"/>
+			</div>
+			<div class="mb-3">
+				<label for="dueDate-input" class="form-label">마감일</label>
+				<input type="date" name="dueDate" class="form-control" id="dueDate-input" th:value="${todo.dueDate}"/>
+			</div>
+			<div class="form-check">
+				<label for="complete-input" class="form-label">완료 여부</label>
+				<input class="form-check-input" id="complete-input" type="checkbox" name="complete"
+						 th:checked="${todo.complete}"/>
+			</div>
+			<button type="submit" class="btn btn-primary">변경하기</button>
+		</form>
+	</th:block>
+</th:block>
+</body>
+</html>

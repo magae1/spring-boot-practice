@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<th:block th:replace="~{layouts/basic :: setContent(~{this :: content} )}">
+	<th:block th:fragment="content">
+			<div class="mx-5 mt-3">
+				<h3># [[${todo.tno}]]</h3>
+				<h4>제목: [[${todo.title}]]</h4>
+				<p>작성자: [[${todo.writer}]]</p>
+				<p>마감일: [[${todo.dueDate}]]</p>
+				<div>
+					<span>완수 여부: </span>
+					<span th:if="${todo.complete}" class="text-success">완료</span>
+					<span th:unless="${todo.complete}">진행중</span>
+				</div>
+				<a th:href="@{/todo/modify(tno=${todo.tno})}" class="btn btn-primary" role="button" aria-disabled="true">수정하러가기</a>
+			</div>
+		</div>
+	</th:block>
+</th:block>
+</body>
+</html>

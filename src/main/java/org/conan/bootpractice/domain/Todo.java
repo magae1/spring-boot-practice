@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 @Getter
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Todo {

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<th:block th:replace="~{layouts/basic :: setContent(~{this :: content} )}">
+	<th:block th:fragment="content">
+		<form th:action="@{/todo/add}" method="post" class="mx-5">
+			<div class="mb-3">
+				<label for="title-input" class="form-label">제목</label>
+				<input type="text" name="title" class="form-control" id="title-input">
+			</div>
+			<div class="mb-3">
+				<label for="writer-input" class="form-label">작성자</label>
+				<input type="text" name="writer" class="form-control" id="writer-input">
+			</div>
+			<div class="mb-3">
+				<label for="dueDate-input" class="form-label">마감일</label>
+				<input type="date" name="dueDate" class="form-control" id="dueDate-input">
+			</div>
+			<input hidden name="complete" value="false"/>
+			<button type="submit" class="btn btn-primary">추가하기</button>
+		</form>
+	</th:block>
+</th:block>
+</body>
+</html>

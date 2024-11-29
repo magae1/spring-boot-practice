@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+</head>
+
+<body>
+<th:block th:replace="~{layouts/basic :: setContent(~{this :: content} )}">
+	<th:block th:fragment="content">
+		<div class="w-100 flex justify-content-end py-1 px-3">
+			<a th:href="@{/todo/add}" class="btn btn-primary" role="button" aria-disabled="true">새 todo
+				만들기</a>
+		</div>
+		<table class="table">
+			<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">제목</th>
+				<th scope="col">작성자</th>
+				<th scope="col">마감일</th>
+				<th scope="col">완료 여부</th>
+				<th scope="col">삭제</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="todo: ${todoList}">
+				<td th:text="${todo.tno}">
+				</td>
+				<td>
+					<a th:href="@{/todo/read(tno=${todo.tno})}">[[${todo.title}]]</a>
+				</td>
+				<td th:text="${todo.writer}"></td>
+				<td th:text="${todo.dueDate}"></td>
+				<td>
+					<span th:if="${todo.complete}" class="text-success">완료</span>
+					<span th:unless="${todo.complete}" class="text-info">진행중</span>
+				</td>
+				<td>
+					<form th:action="@{/todo/remove(tno=${todo.tno})}" method="post">
+						<button class="btn btn-danger btn-sm" type="submit">삭제하기</button>
+					</form>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</th:block>
+</th:block>
+</body>
+
+</html>
