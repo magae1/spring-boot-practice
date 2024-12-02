@@ -1,4 +1,4 @@
-package org.conan.bootpractice;
+package org.conan.bootpractice.repository;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.conan.bootpractice.domain.Todo;
-import org.conan.bootpractice.repository.TodoRepository;
 
 
 @SpringBootTest

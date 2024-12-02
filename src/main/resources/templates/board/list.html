@@ -5,32 +5,56 @@
 	<title>Title</title>
 </head>
 <body>
-<table>
-	<tr>
-		<th>게시글 번호</th>
-		<th>제목</th>
-		<th>내용</th>
-		<th>작성자</th>
-		<th>등록일</th>
-		<th>조회수</th>
-		<th>삭제</th>
-	</tr>
-	<tr th:each="item : ${bList}">
-		<td th:text="${item.bno}"></td>
-		<td>
-			<a th:text="${item.title}" th:href="@{/board/read(bno=${item.bno})}"></a>
-		</td>
-		<td th:text="${item.content}"></td>
-		<td th:text="${item.writer}"></td>
-		<td th:text="${#temporals.format(item.regDate, 'yyyy-MM-dd')}"></td>
-		<td th:text="${item.hit}"></td>
-		<td>
-			<form th:action="@{/board/remove(bno=${item.bno})}" method="post">
-				<button type="submit">삭제하기</button>
-			</form>
-		</td>
-	</tr>
-</table>
-<a th:href="@{/board/write}">새 게시글 작성하러 가기</a>
+<th:block th:replace="~{layouts/basic :: setContent(~{this :: content} )}">
+	<th:block th:fragment="content">
+		<table class="table">
+			<tr>
+				<th>게시글 번호</th>
+				<th>제목</th>
+				<th>내용</th>
+				<th>작성자</th>
+				<th>등록일</th>
+				<th>조회수</th>
+				<th>삭제</th>
+			</tr>
+			<tr th:each="item : ${result.dtoList}">
+				<td th:text="${item.bno}"></td>
+				<td>
+					<a th:href="@{/board/read(bno=${item.bno})}">
+						[[${item.title}]]___([[${item.replyCount}]])
+					</a>
+				</td>
+				<td th:text="${item.content}"></td>
+				<td th:text="${item.writerEmail}"></td>
+				<td th:text="${#temporals.format(item.regDate, 'yyyy-MM-dd')}"></td>
+				<td th:text="${item.hit}"></td>
+				<td>
+					<form th:action="@{/board/remove(bno=${item.bno})}" method="post">
+						<button class="btn btn-danger" type="submit">삭제하기</button>
+					</form>
+				</td>
+			</tr>
+		</table>
+		<div class="d-flex justify-content-center w-100">
+			<nav>
+				<ul th:class="pagination">
+					<li class="page-item" th:if="${result.prev}">
+						<a th:class="page-link" th:href="@{/board/list(page=${(result.start)-1})}" tabindex="-1"
+							aria-disabled="true">Previous</a>
+					</li>
+					<th:block th:each="i : ${result.pageNums}">
+						<li th:class=" 'page-item '+${result.page == i ? 'active':''}" aria-current="page">
+							<a th:class="page-link" th:href="@{/board/list(page=${i})}">[[${i}]]</a>
+						</li>
+					</th:block>
+					<li th:class="page-item" th:if="${result.next}">
+						<a th:class="page-link" th:href="@{/board/list(page=${(result.end)+1})}">Next</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<a class="btn btn-primary" th:href="@{/board/write}">새 게시글 작성하러 가기</a>
+	</th:block>
+</th:block>
 </body>
 </html>

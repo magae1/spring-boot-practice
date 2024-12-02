@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.conan.bootpractice.dao.BoardMapper">
-    <select id="getBoardList" resultType="org.conan.bootpractice.domain.Board">
+    <select id="getBoardList" resultType="org.conan.bootpractice.domain.entity.Board">
         SELECT * FROM BOARD WHERE BNO > 0
     </select>
     <insert id="insert">
@@ -16,7 +16,7 @@
             SELECT last_insert_id()
         </selectKey>
     </insert>
-    <select id="read" resultType="org.conan.bootpractice.domain.Board">
+    <select id="read" resultType="org.conan.bootpractice.domain.entity.Board">
         SELECT *
         FROM BOARD
         WHERE BNO=#{bno}

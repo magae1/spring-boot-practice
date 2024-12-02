@@ -1,4 +1,4 @@
-package org.conan.bootpractice;
+package org.conan.bootpractice.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 
 import org.conan.bootpractice.domain.Memo;
-import org.conan.bootpractice.repository.MemoRepository;
 
 
 @SpringBootTest
@@ -52,16 +51,16 @@ public class MemoRepositoryTests {
     @Transactional
     @Test
     public void testSelect2() {
-        Long mno = 5L;
-        Memo memo = memoRepository.getOne(mno);
-        log.info("==================");
-        log.info(memo);
+//        Long mno = 5L;
+//        Memo memo = memoRepository.getOne(mno);
+//        log.info("==================");
+//        log.info(memo);
     }
 
     @Test
     public void testUpdate() {
-        Memo memo = Memo.builder().mno(5L).memoText("Sample updated").build();
-        log.info(memoRepository.save(memo));
+//        Memo memo = Memo.builder().mno(5L).memoText("Sample updated").build();
+//        log.info(memoRepository.save(memo));
     }
 
     @Test

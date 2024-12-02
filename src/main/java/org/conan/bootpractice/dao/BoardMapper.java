@@ -3,7 +3,9 @@ package org.conan.bootpractice.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.conan.bootpractice.domain.Board;
+
+import org.conan.bootpractice.domain.entity.Board;
+
 
 @Mapper
 public interface BoardMapper {

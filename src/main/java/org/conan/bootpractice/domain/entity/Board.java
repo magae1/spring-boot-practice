@@ -1,21 +1,17 @@
-package org.conan.bootpractice.domain;
-
-import java.time.LocalDateTime;
+package org.conan.bootpractice.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "board")
-@ToString
+@ToString(exclude = "writer")
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board {
+public class Board extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
@@ -26,12 +22,8 @@ public class Board {
     @Column(length = 1000, nullable = false)
     private String content;
 
-    @Column(length = 40, nullable = false)
-    private String writer;
-
-    @CreatedDate
-    @Column(name = "regdate", updatable = false)
-    private LocalDateTime regDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member writer;
 
     @Builder.Default
     private Integer hit = 0;

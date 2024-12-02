@@ -1,5 +1,7 @@
 package org.conan.bootpractice.controller;
 
+import java.util.Optional;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import org.conan.bootpractice.domain.Board;
+import org.conan.bootpractice.domain.entity.Board;
+import org.conan.bootpractice.domain.PageRequestDTO;
 import org.conan.bootpractice.domain.BoardDTO;
 import org.conan.bootpractice.service.BoardService;
 
@@ -23,9 +26,9 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/list")
-    public void list(Model model) {
+    public void list(PageRequestDTO pageRequestDTO, Model model) {
         log.info("Board list");
-        model.addAttribute("bList", boardService.getAllBoards());
+        model.addAttribute("result", boardService.getList(pageRequestDTO));
     }
 
     @GetMapping("/write")
@@ -42,8 +45,8 @@ public class BoardController {
 
     @GetMapping({"/read", "/modify"})
     public void read(@RequestParam("bno") Long bno, Model model) {
-        System.out.println("Board read: " + bno);
-        model.addAttribute("board", boardService.read(bno));
+        Optional<Board> result = boardService.read(bno);
+        result.ifPresent(board -> model.addAttribute("board", board));
     }
 
     @PostMapping("/modify")
