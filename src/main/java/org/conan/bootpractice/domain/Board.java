@@ -2,15 +2,37 @@ package org.conan.bootpractice.domain;
 
 import java.time.LocalDateTime;
 
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-
-@Data
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "board")
+@ToString
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Board {
-    private Integer bno;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bno;
+
+    @Column(length = 40, nullable = false)
     private String title;
+
+    @Column(length = 1000, nullable = false)
     private String content;
+
+    @Column(length = 40, nullable = false)
     private String writer;
+
+    @CreatedDate
+    @Column(name = "regdate", updatable = false)
     private LocalDateTime regDate;
-    private Integer hit;
+
+    @Builder.Default
+    private Integer hit = 0;
 }

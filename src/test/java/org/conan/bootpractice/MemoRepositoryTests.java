@@ -1,5 +1,6 @@
 package org.conan.bootpractice;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -8,13 +9,14 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import org.conan.bootpractice.domain.Memo;
-import org.conan.bootpractice.repository.MemoRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
+
+import org.conan.bootpractice.domain.Memo;
+import org.conan.bootpractice.repository.MemoRepository;
 
 
 @SpringBootTest
@@ -88,5 +90,31 @@ public class MemoRepositoryTests {
         Pageable pageable = PageRequest.of(0, 10, sort);
         Page<Memo> res = memoRepository.findAll(pageable);
         res.get().forEach(System.out::println);
+    }
+
+    @Test
+    public void testQueryMethod() {
+        List<Memo> memoList = memoRepository.findByMnoBetweenOrderByMnoDesc(70L, 80L);
+        memoList.forEach(log::info);
+    }
+
+    @Test
+    public void testQueryMethodWithPageable() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "mno"));
+        Page<Memo> res = memoRepository.findByMnoBetween(10L, 50L, pageable);
+        res.get().forEach(log::info);
+    }
+
+    @Commit
+    @Transactional
+    @Test
+    public void testDeleteQueryMethod() {
+        memoRepository.deleteByMnoLessThan(20L);
+    }
+
+    @Test
+    public void testQueryAnnotationMethod() {
+        List<Memo> memoList = memoRepository.getListDesc();
+        memoList.forEach(log::info);
     }
 }

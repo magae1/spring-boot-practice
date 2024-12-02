@@ -7,8 +7,6 @@ import lombok.*;
 
 @Entity
 @Table(name = "todo")
-@ToString
-@Getter
 @Builder
 @Data
 @NoArgsConstructor

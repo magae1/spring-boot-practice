@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.conan.bootpractice.domain.Board;
+import org.conan.bootpractice.domain.BoardDTO;
 import org.conan.bootpractice.service.BoardService;
 
 
@@ -32,7 +33,7 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String register(Board board, RedirectAttributes rattr) {
+    public String register(BoardDTO board, RedirectAttributes rattr) {
         log.info("Board register");
         boardService.write(board);
         rattr.addFlashAttribute("result", board.getBno());
@@ -40,30 +41,22 @@ public class BoardController {
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(@RequestParam("bno") Integer bno, Model model) {
+    public void read(@RequestParam("bno") Long bno, Model model) {
         System.out.println("Board read: " + bno);
         model.addAttribute("board", boardService.read(bno));
     }
 
     @PostMapping("/modify")
-    public String modify(Board board, RedirectAttributes rattr) {
+    public String modify(BoardDTO board) {
         log.info("Board modify: " + board);
-        if (boardService.modify(board)) {
-            rattr.addFlashAttribute("result", "success");
-        } else {
-            rattr.addFlashAttribute("result", "fail");
-        }
+        boardService.modify(board);
         return "redirect:/board/list";
     }
 
     @PostMapping("/remove")
-    public String remove(@RequestParam("bno") Integer bno, RedirectAttributes rattr) {
+    public String remove(@RequestParam("bno") Long bno) {
         log.info("Board remove: " + bno);
-        if (boardService.remove(bno)) {
-            rattr.addFlashAttribute("result", "success");
-        } else {
-            rattr.addFlashAttribute("result", "fail");
-        }
+        boardService.remove(bno);
         return "redirect:/board/list";
     }
 
