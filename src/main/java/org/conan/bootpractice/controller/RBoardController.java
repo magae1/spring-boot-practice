@@ -4,31 +4,28 @@ import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import org.conan.bootpractice.domain.entity.Board;
-import org.conan.bootpractice.domain.PageRequestDTO;
 import org.conan.bootpractice.domain.BoardDTO;
+import org.conan.bootpractice.domain.PageRequestDTO;
+import org.conan.bootpractice.domain.PageResultDTO;
+import org.conan.bootpractice.domain.entity.Board;
 import org.conan.bootpractice.service.BoardService;
 
 
 @Log4j2
-@Controller
-//@RequestMapping("/board")
+@RestController
+@RequestMapping("/board")
 @AllArgsConstructor
-public class BoardController {
+public class RBoardController {
     private BoardService boardService;
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model) {
+    public PageResultDTO<BoardDTO, Object[]> list(PageRequestDTO pageRequestDTO) {
         log.info("Board list");
-        model.addAttribute("result", boardService.getList(pageRequestDTO));
+        return boardService.getList(pageRequestDTO);
     }
 
     @GetMapping("/write")
