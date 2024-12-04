@@ -8,12 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.conan.bootpractice.domain.entity.Board;
-import org.conan.bootpractice.domain.PageRequestDTO;
+import org.conan.bootpractice.domain.BoardPageRequestDTO;
 import org.conan.bootpractice.domain.BoardDTO;
 import org.conan.bootpractice.service.BoardService;
 
@@ -26,7 +25,7 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model) {
+    public void list(BoardPageRequestDTO pageRequestDTO, Model model) {
         log.info("Board list");
         model.addAttribute("result", boardService.getList(pageRequestDTO));
     }

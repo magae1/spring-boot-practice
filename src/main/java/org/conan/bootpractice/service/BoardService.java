@@ -11,11 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import org.conan.bootpractice.domain.PageRequestDTO;
+import org.conan.bootpractice.domain.BoardPageRequestDTO;
 import org.conan.bootpractice.domain.entity.Board;
 import org.conan.bootpractice.domain.entity.Member;
 import org.conan.bootpractice.domain.BoardDTO;
-import org.conan.bootpractice.domain.PageResultDTO;
+import org.conan.bootpractice.domain.BoardPageResultDTO;
 import org.conan.bootpractice.repository.BoardRepository;
 
 
@@ -52,7 +52,7 @@ public class BoardService {
         boardRepository.deleteById(bno);
     }
 
-    public PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO reqDTO) {
+    public BoardPageResultDTO<BoardDTO, Object[]> getList(BoardPageRequestDTO reqDTO) {
         log.info("getPagedList: {}", reqDTO);
         Pageable pageable = reqDTO.getPageable(Sort.by("bno").descending());
         Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
@@ -60,7 +60,7 @@ public class BoardService {
         Function<Object[], BoardDTO> fn = (entities -> {
             return entityToDto((Board) entities[0], (Member) entities[1], (Long) entities[2]);
         });
-        return new PageResultDTO<>(result, fn);
+        return new BoardPageResultDTO<>(result, fn);
     }
 
 

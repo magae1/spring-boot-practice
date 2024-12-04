@@ -7,10 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.conan.bootpractice.domain.entity.Board;
 import org.conan.bootpractice.domain.BoardDTO;
-import org.conan.bootpractice.domain.PageRequestDTO;
-import org.conan.bootpractice.domain.PageResultDTO;
+import org.conan.bootpractice.domain.BoardPageRequestDTO;
+import org.conan.bootpractice.domain.BoardPageResultDTO;
 import org.conan.bootpractice.service.BoardService;
 
 
@@ -34,21 +33,21 @@ public class BoardServiceTests {
 
     @Test
     public void testList() {
-        PageRequestDTO pageRequestDto = PageRequestDTO.builder()
+        BoardPageRequestDTO pageRequestDto = BoardPageRequestDTO.builder()
                 .page(1)
                 .size(5)
                 .build();
-        PageResultDTO<BoardDTO, Object[]> result = boardService.getList(pageRequestDto);
+        BoardPageResultDTO<BoardDTO, Object[]> result = boardService.getList(pageRequestDto);
         result.getDtoList().forEach(log::info);
     }
 
     @Test
     public void testPagedList() {
-        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+        BoardPageRequestDTO pageRequestDTO = BoardPageRequestDTO.builder()
                 .page(1)
                 .size(5)
                 .build();
-        PageResultDTO<BoardDTO, Object[]> resultDTO = boardService.getList(pageRequestDTO);
+        BoardPageResultDTO<BoardDTO, Object[]> resultDTO = boardService.getList(pageRequestDTO);
         log.info("PREV : {}", resultDTO.isPrev());
         log.info("NEXT : {}", resultDTO.isNext());
         log.info("TOTAL PAGE : {}", resultDTO.getTotalPage());

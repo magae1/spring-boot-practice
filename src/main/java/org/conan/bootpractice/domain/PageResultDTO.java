@@ -1,39 +1,45 @@
 package org.conan.bootpractice.domain;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 
 @Data
-public class PageResultDTO<DTO, EN> {
+public class PageResultDTO<E> {
+    private PageRequestDTO pageRequestDTO;
     private int totalPage;
-    private int page;
-    private int size;
-    private int start, end;
+    private int current;
+    private int totalCount;
+    private int prevPage, nextPage;
     private boolean prev, next;
-    private List<Integer> pageNums;
-    private List<DTO> dtoList;
+    private List<Integer> pageNumList;
+    private List<E> dtoList;
 
-    public PageResultDTO(Page<EN> page, Function<EN, DTO> mapper) {
-        dtoList = page.stream().map(mapper).collect(Collectors.toList());
-        totalPage = page.getTotalPages();
-        makePageList(page.getPageable());
-    }
+    @Builder(builderMethodName = "withAll")
+    public PageResultDTO(List<E> dtoList, PageRequestDTO pageRequestDTO, long totalCount) {
+        this.dtoList = dtoList;
+        this.pageRequestDTO = pageRequestDTO;
+        this.totalCount = (int) totalCount;
+        int end = (int) (Math.ceil(pageRequestDTO.getPage() / 10.0)) * 10;
+        int start = end - 9;
+        int last = (int) (Math.ceil((totalCount / (double) pageRequestDTO.getSize())));
+        end = Math.min(end, last);
 
-    private void makePageList(Pageable pageable) {
-        page = pageable.getPageNumber() + 1;
-        size = pageable.getPageSize();
-        int tempEnd = (int) (Math.ceil(page / 10.0)) * 10;
-        start = tempEnd - 9;
-        prev = start > 1;
-        end = Math.min(totalPage, tempEnd);
-        next = totalPage > tempEnd;
-        pageNums = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+        this.prev = start > 1;
+        this.next = totalCount > ((long) end * pageRequestDTO.getSize());
+        this.pageNumList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+        if (prev) {
+            this.prevPage = start - 1;
+        }
+        if (next) {
+            this.nextPage = end + 1;
+        }
+
+        this.totalPage = this.pageNumList.size();
+        this.current = pageRequestDTO.getPage();
     }
 }

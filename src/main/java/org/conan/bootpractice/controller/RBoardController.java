@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.conan.bootpractice.domain.BoardDTO;
-import org.conan.bootpractice.domain.PageRequestDTO;
-import org.conan.bootpractice.domain.PageResultDTO;
+import org.conan.bootpractice.domain.BoardPageRequestDTO;
+import org.conan.bootpractice.domain.BoardPageResultDTO;
 import org.conan.bootpractice.domain.entity.Board;
 import org.conan.bootpractice.service.BoardService;
 
@@ -23,7 +23,7 @@ public class RBoardController {
     private BoardService boardService;
 
     @GetMapping("/list")
-    public PageResultDTO<BoardDTO, Object[]> list(PageRequestDTO pageRequestDTO) {
+    public BoardPageResultDTO<BoardDTO, Object[]> list(BoardPageRequestDTO pageRequestDTO) {
         log.info("Board list");
         return boardService.getList(pageRequestDTO);
     }
