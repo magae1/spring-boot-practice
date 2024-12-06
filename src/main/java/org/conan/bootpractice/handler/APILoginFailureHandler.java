@@ -1,4 +1,4 @@
-package org.conan.bootpractice.util;
+package org.conan.bootpractice.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -1,4 +1,4 @@
-package org.conan.bootpractice;
+package org.conan.bootpractice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

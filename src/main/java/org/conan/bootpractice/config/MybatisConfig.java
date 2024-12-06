@@ -1,4 +1,4 @@
-package org.conan.bootpractice;
+package org.conan.bootpractice.config;
 
 import javax.sql.DataSource;
 

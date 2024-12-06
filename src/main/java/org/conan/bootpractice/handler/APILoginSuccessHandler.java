@@ -1,4 +1,4 @@
-package org.conan.bootpractice.util;
+package org.conan.bootpractice.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.conan.bootpractice.util.JWTUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -25,7 +26,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
 
         SubscriberDTO subscriberDTO = (SubscriberDTO) authentication.getPrincipal();
         Map<String, Object> claims = subscriberDTO.getClaims();
-        String accessToken = JWTUtil.generateToken(claims, 10);
+        String accessToken = JWTUtil.generateToken(claims, 1);
         String refreshToken = JWTUtil.generateToken(claims, 60 * 24);
         claims.put("accessToken", accessToken);
         claims.put("refreshToken", refreshToken);
